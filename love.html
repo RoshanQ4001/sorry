@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wish Upon A Star</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .star {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: float 5s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+        .message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            font-size: 4vw;
+        }
+        .love-letter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            display: none;
+            font-size: 2vw;
+        }
+        h1 {
+            font-size: 6vw;
+        }
+        p {
+            font-size: 3vw;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wish Upon A Star ✨</h1>
+    <p>Click on a star to see a special message for you!</p>
+
+    <audio id="backgroundMusic" loop>
+        <source src="Ishq hai.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="message" id="message"></div>
+    <div class="love-letter" id="loveLetter">
+        <h2>My Love Letter to You ❤️</h2>
+        <p>
+            My love,  
+            I know the past few days have been tough, and I regret not being more understanding.  
+            You mean the world to me, and I never want you to feel unimportant.  
+            No distance, no situation can ever change what I feel for you.  
+            You are my brightest star, always guiding me.  
+            I love you more than words can express. 💖
+        </p>
+    </div>
+
+    <script>
+        const messages = [
+            "You are my light in the dark.",
+            "Every moment with you is magical.",
+            "I miss you more than words can say.",
+            "No matter what happens, you are my world.",
+            "I am so lucky to have you in my life.",
+            "I will always support and cherish you.",
+            "Distance can't change my love for you."
+        ];
+
+        function createStars() {
+            for (let i = 0; i < 20; i++) {
+                let star = document.createElement("div");
+                star.classList.add("star");
+                star.style.top = Math.random() * window.innerHeight + "px";
+                star.style.left = Math.random() * window.innerWidth + "px";
+                document.body.appendChild(star);
+
+                star.addEventListener("click", function() {
+                    let messageBox = document.getElementById("message");
+                    messageBox.innerText = messages[Math.floor(Math.random() * messages.length)];
+                    messageBox.style.display = "block";
+                    setTimeout(() => { messageBox.style.display = "none"; }, 3000);
+                });
+            }
+        }
+
+        function showLoveLetter() {
+            setTimeout(() => {
+                document.getElementById("loveLetter").style.display = "block";
+            }, 10000);
+        }
+
+        function playMusic() {
+            const music = document.getElementById("backgroundMusic");
+            music.play().catch(() => {
+                document.body.addEventListener('click', () => music.play(), { once: true });
+            });
+        }
+
+        createStars();
+        showLoveLetter();
+        playMusic();
+
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('.star').forEach(star => star.remove());
+            createStars();
+        });
+    </script>
+</body>
+</html>
+
